@@ -1,0 +1,9 @@
+.add-blog-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.add-blog-container >form{
+    padding: 20px;
+    margin: 10px;
+}

@@ -1,0 +1,29 @@
+.topics{
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+
+.item-image{
+    height: 300px;
+    width: 300px;
+}
+
+.home-item>a{
+    list-style: none;
+    text-decoration: none;
+}
+
+.headers{
+    display: flex;
+    justify-content: space-between;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.home-item{
+    height: 350px;
+    width: 350px;
+    border: 1px solid black;
+    padding: 10px;
+    margin: 10px;
+}
