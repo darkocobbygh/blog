@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import SearchBar from './pages/SearchBar';
 import News from './pages/News';
 import AddArticle from './pages/AddArticle';
+import IndieBlog from './pages/IndieBlog';
 function App() {
   return (
     <div className="App">
@@ -14,6 +15,7 @@ function App() {
       <Route path='/news' element={<News/>}></Route>
       <Route path='/sports' element={<SearchBar/>}></Route>
       <Route path='add-blog' element={<AddArticle/>}></Route>
+      <Route path='blog/:id' element={<IndieBlog/>}></Route>
     </Routes>
     </div>
   );

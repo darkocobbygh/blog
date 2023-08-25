@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import './home.css'
 import axios from 'axios'
 import SearchBar from './SearchBar'
+import SearchResultsList from '../components/SearchResultsList'
 const Home = () => {
+  const {id}= useParams();
     const [data,setData]=useState([]);
     const [loading,setLoading]=useState(true);
     const [error,setError]=useState(null);
+    const [results,setResults]=useState([])
+
+    const navigate=useNavigate();
 
     //FETCH BLOGS
     useEffect(()=>{
@@ -15,7 +20,7 @@ const Home = () => {
        axios.get(apiUrl)
         .then((resp)=>{
           setData(resp.data);
-          console.log(resp.data.title)
+          console.log(resp.data)
           setLoading(false)
         })
         .catch((err)=>{
@@ -34,18 +39,11 @@ const Home = () => {
     return () => clearInterval(interval); // Cleanup the interval on unmount
   }, []); **/
 
+ 
+
   const [items, setItems] = useState([]);
 
-    const searchItems = async (query) => {
-        try {
-            const response = await axios.get('http://localhost:5000/blogs', {
-                params: { q: query } // this is just an example, adjust as per your API's requirements
-            });
-            setItems(response.data);
-        } catch (error) {
-            console.error('Error fetching items:', error);
-        }
-    };
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
@@ -55,21 +53,22 @@ const Home = () => {
       <div className='headers'>
       <h2>Welcome to my blog</h2>
       <div>
-      <SearchBar onSearch={searchItems} />
+      <SearchBar setResults={setResults} />
+      <SearchResultsList results={results} />
        
                 {items.map(item => (
-                    <p key={item._id}>{item._id}</p>  // adjust based on your data structure
+                    <p key={item._id}>{item.title}</p>  // adjust based on your data structure
                 ))}
            
       </div>
       </div>
       <div className='topics'>
-          {data.map((item)=>{
+          {data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((item)=>{
             return(
               <div className='home-item' key={item._id}>
               <Link>
         <h3>{item.title} </h3>
-        <p>{item.content.substring(0,150)} </p>
+        <p>{item.content.substring(0,400)} </p>
         <button>Read more...</button>
         </Link>
         <p>Posted: {new Date(item.createdAt).toDateString()} {new Date(item.createdAt).toLocaleTimeString()}</p>
